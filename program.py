@@ -1,11 +1,8 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 import time
-import pickle
+from utils import timedeltaToMs, dictToFile
 
-'''
-Get A Character 
-https://stackoverflow.com/questions/510357/how-to-read-a-single-character-from-the-user
-'''
+# Excerpted from https://stackoverflow.com/questions/510357/how-to-read-a-single-character-from-the-user
 
 
 class _Getch:
@@ -108,23 +105,6 @@ def makeDigraph(paragraph: str, timeChar: list) -> dict:
         digraph[key] = sum(value) / len(value)
 
     return digraph
-
-
-def dictToFile(dictionary: dict, filename=datetime.now().strftime('%Y/%m/%d-%H:%M:%S')) -> None:
-    with open(filename, 'wb') as f:
-        pickle.dump(dictionary, f)
-
-
-def fileToDict(filename: str) -> dict:
-    with open(filename, 'rb') as f:
-        d = pickle.load(f)
-    return d
-
-
-def timedeltaToMs(td: timedelta) -> float:
-    secs = td.seconds
-    microsecs = td.microseconds
-    return microsecs*1000 + secs/1000
 
 
 if __name__ == '__main__':
