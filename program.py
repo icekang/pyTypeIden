@@ -1,5 +1,6 @@
 from datetime import datetime
 import time
+import pickle
 
 '''
 Get A Character 
@@ -59,7 +60,7 @@ Casual Fridays preceded widespread acceptance of business casual attire in many 
 paragraph = '''Business casual is an ambiguously defined dress code that has been adopted by many professional and white-collar workplaces in Western countries. It entails neat yet casual attire and is generally more casual than informal attire but more formal than casual or smart casual attire. Casual Fridays preceded widespread acceptance of business casual attire in many offices.'''
 
 
-def recordTyping(paragraph):
+def recordTyping(paragraph: str) -> list:
     print('Starting the record process...')
     print('Total words: {}'.format(len(paragraph.split())))
     time.sleep(1)
@@ -85,10 +86,21 @@ def recordTyping(paragraph):
     return timeChar
 
 
-def makeDigraph(paragraph, timeChar):
+def makeDigraph(paragraph: str, timeChar: list) -> dict:
     digraph = dict()
 
     return digraph
+
+
+def dictToFile(dictionary: dict, filename=datetime.now().strftime('%Y/%m/%d-%H:%M:%S')) -> None:
+    with open(filename, 'wb') as f:
+        pickle.dump(dictionary, f)
+
+
+def fileToDict(filename: str) -> dict:
+    with open(filename, 'rb') as f:
+        d = pickle.load(f)
+    return d
 
 
 if __name__ == '__main__':
