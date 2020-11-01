@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import time
 import pickle
 
@@ -85,7 +85,22 @@ def recordTyping(paragraph: str) -> list:
 
 
 def makeDigraph(paragraph: str, timeChar: list) -> dict:
+    assert len(paragraph) == len(timeChar)
     digraph = dict()
+
+    curr = 0
+    prevCh = paragraph[curr]
+    curr += 1
+    while curr < len(paragraph):
+        currCh = paragraph[curr]
+        diWord = '{prevCh}{currCh}'.format(prevCh=prevCh, currCh=currCh)
+        if not diWord in digraph:
+            digraph[diWord] = list()
+        ms = timedeltaToMs(timeChar[curr] - timeChar[curr - 1])
+        digraph[diWord].append(ms)
+
+    for key, value in digraph:
+        digraph[key] = sum(value) / len(value)
 
     return digraph
 
@@ -99,6 +114,12 @@ def fileToDict(filename: str) -> dict:
     with open(filename, 'rb') as f:
         d = pickle.load(f)
     return d
+
+
+def timedeltaToMs(td: timedelta) -> float:
+    secs = td.seconds
+    microsecs = td.microseconds
+    return microsecs*1000 + secs / 1000
 
 
 if __name__ == '__main__':
