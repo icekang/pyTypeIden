@@ -76,7 +76,9 @@ def recordTyping(paragraph: str) -> list:
     for ch in paragraph:
         print('>>', ch)
         while True:
-            inCh = getChar().decode('utf-8')
+            inCh = getChar()
+            if not isinstance(inCh, str):
+                inCh = inCh.decode('utf-8')
             if (inCh == ch):
                 stop = datetime.now()
                 timeChar.append(stop)
@@ -95,6 +97,7 @@ def makeDigraph(paragraph: str, timeChar: list) -> dict:
     while curr < len(paragraph):
         currCh = paragraph[curr]
         diWord = '{prevCh}{currCh}'.format(prevCh=prevCh, currCh=currCh)
+        prevCh = currCh
         if not diWord in digraph:
             digraph[diWord] = list()
         ms = timedeltaToMs(timeChar[curr] - timeChar[curr - 1])
