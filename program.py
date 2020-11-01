@@ -57,7 +57,8 @@ generally more casual than informal attire but more formal than casual or smart 
 Casual Fridays preceded widespread acceptance of business casual attire in many offices.
 '''
 
-paragraph = '''Business casual is an ambiguously defined dress code that has been adopted by many professional and white-collar workplaces in Western countries. It entails neat yet casual attire and is generally more casual than informal attire but more formal than casual or smart casual attire. Casual Fridays preceded widespread acceptance of business casual attire in many offices.'''
+paragraph = '''Business casual is an ambiguously defined dress code that has been adopted by many professional and white-collar workplaces in Western countries.'''
+# It entails neat yet casual attire and is generally more casual than informal attire but more formal than casual or smart casual attire. Casual Fridays preceded widespread acceptance of business casual attire in many offices.'''
 
 
 def recordTyping(paragraph: str) -> list:
@@ -98,8 +99,9 @@ def makeDigraph(paragraph: str, timeChar: list) -> dict:
             digraph[diWord] = list()
         ms = timedeltaToMs(timeChar[curr] - timeChar[curr - 1])
         digraph[diWord].append(ms)
+        curr += 1
 
-    for key, value in digraph:
+    for key, value in digraph.items():
         digraph[key] = sum(value) / len(value)
 
     return digraph
@@ -119,11 +121,13 @@ def fileToDict(filename: str) -> dict:
 def timedeltaToMs(td: timedelta) -> float:
     secs = td.seconds
     microsecs = td.microseconds
-    return microsecs*1000 + secs / 1000
+    return microsecs*1000 + secs/1000
 
 
 if __name__ == '__main__':
     filename = input('[name]-[num]: ')
     timeChar = recordTyping(paragraph)
     digraph = makeDigraph(paragraph, timeChar)
+    print('digraph')
+    print(digraph)
     dictToFile(digraph, filename)
