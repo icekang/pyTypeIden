@@ -123,5 +123,7 @@ def timedeltaToMs(td: timedelta) -> float:
 
 
 if __name__ == '__main__':
+    filename = input('[name]-[num]: ')
     timeChar = recordTyping(paragraph)
-    makeDigraph(paragraph, timeChar)
+    digraph = makeDigraph(paragraph, timeChar)
+    dictToFile(digraph, filename)
