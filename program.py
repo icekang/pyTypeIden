@@ -72,8 +72,6 @@ def recordTyping(paragraph: str) -> list:
     time.sleep(1)
     print('Started!')
     timeChar = list()
-    start = datetime.now()
-    timeChar.append(start)
     for ch in paragraph:
         print('>>', ch)
         while True:
